@@ -1,4 +1,17 @@
-class Cardio {
+let deleteCard = function(id) {
+  fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+  })
+;
+}
+let deleteCardLocal = function(){
+console.log(1);
+}
+
+class Cardio  {
     constructor(title,description,doctor,urgency,fullName,bloodPressure,bmi,diseaseHistory,age,id) {
         this.title = title
         this.description = description
@@ -12,6 +25,10 @@ class Cardio {
         this.id = id
     }
     render(){
+      const cardCloseBtn = document.createElement('button')
+    cardCloseBtn.classList.add('card-close-btn')
+    cardCloseBtn.type = 'button'
+    cardCloseBtn.textContent = 'x'
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('card-container');
         const cardTitle = document.createElement('h2');
@@ -42,13 +59,24 @@ class Cardio {
         age.classList.add('age')
         age.textContent = this.age
         cardDiv.setAttribute('id',this.id)
-        cardDiv.append(cardTitle,cardDescription,cardDoctor,urgency,fullName,bloodPressure,bmi,diseaseHistory,age)
+        cardCloseBtn.addEventListener('click', function() {
+          fetch(`https://ajax.test-danit.com/api/v2/cards/${cardDiv.getAttribute('id')}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+          })
+        })
+        cardCloseBtn.addEventListener('click', function(e) {
+          e.target.parentNode.remove();
+         })
+        cardDiv.append(cardCloseBtn,cardTitle,cardDescription,cardDoctor,urgency,fullName,bloodPressure,bmi,diseaseHistory,age)
         document.querySelector('.body-container').append(cardDiv)
         
     }
   
 }
-class Dentist {
+class Dentist  {
   constructor(title,description,doctor,urgency,fullName,lastVisit,id) {
       this.title = title
       this.description = description
@@ -59,6 +87,10 @@ class Dentist {
    this.id = id
   }
   render(){
+    const cardCloseBtn = document.createElement('button')
+    cardCloseBtn.classList.add('card-close-btn')
+    cardCloseBtn.type = 'button'
+    cardCloseBtn.textContent = 'x'
       const cardDiv = document.createElement('div');
       cardDiv.classList.add('card-container');
       const cardTitle = document.createElement('h2');
@@ -80,12 +112,23 @@ class Dentist {
      lastVisit.classList.add('last-visit')
      lastVisit.textContent = this.lastVisit;
      cardDiv.setAttribute('id',this.id)
-     cardDiv.append(cardTitle,cardDescription,cardDoctor,urgency,fullName,lastVisit)
+     cardCloseBtn.addEventListener('click', function() {
+      fetch(`https://ajax.test-danit.com/api/v2/cards/${cardDiv.getAttribute('id')}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      })
+    })
+    cardCloseBtn.addEventListener('click', function(e) {
+      e.target.parentNode.remove();
+     })
+     cardDiv.append(cardCloseBtn,cardTitle,cardDescription,cardDoctor,urgency,fullName,lastVisit)
         document.querySelector('.body-container').append(cardDiv)
   }
 
 }
-class Therapist {
+class Therapist  {
   constructor(title,description,doctor,urgency,fullName,age,id) {
       this.title = title
       this.description = description
@@ -96,6 +139,10 @@ class Therapist {
    this.id = id 
   }
   render(){
+    const cardCloseBtn = document.createElement('button')
+    cardCloseBtn.classList.add('card-close-btn')
+    cardCloseBtn.type = 'button'
+    cardCloseBtn.textContent = 'x'
       const cardDiv = document.createElement('div');
       cardDiv.classList.add('card-container');
       const cardTitle = document.createElement('h2');
@@ -117,7 +164,18 @@ class Therapist {
    age.classList.add('age')
      age.textContent = this.age;
      cardDiv.setAttribute('id',this.id)
-     cardDiv.append(cardTitle,cardDescription,cardDoctor,urgency,fullName,age)
+     cardCloseBtn.addEventListener('click', function() {
+      fetch(`https://ajax.test-danit.com/api/v2/cards/${cardDiv.getAttribute('id')}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      })
+    })
+    cardCloseBtn.addEventListener('click', function(e) {
+      e.target.parentNode.remove();
+     })
+     cardDiv.append(cardCloseBtn,cardTitle,cardDescription,cardDoctor,urgency,fullName,age)
     document.querySelector('.body-container').append(cardDiv)
   }
 

@@ -18,6 +18,13 @@
 .card-container{
     padding: 10px 20px;
     background-color:green;
+    position: relative;
+}
+.card-close-btn{
+    background-color: none;
+    position: absolute;
+    top: 5px;
+    right: 5px
 }
 .card-description{
     margin-bottom: 5px;
