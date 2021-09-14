@@ -1,32 +1,22 @@
-import Alert from './CardioModal.js'
-const createElement = function({tagName = 'div',text = '',className = ''}){
-    const element = document.createElement(tagName)
-    element.classList.add(className)   
-    element.textContent = text
-    return element
-}
-let loginBtn = createElement({
-    tagName: 'a',
-    text: 'Login',
-    className: 'login-btn',
-})
-loginBtn.href = '#openModal'
-let renderHeader = function(){
-    const header = createElement({
-        tagName: 'header',
-        text: '',
-        className: 'header',
-    })
-    const  headerImg = createElement({
-        tagName: 'img', 
-        text: '',
-        className: 'img-header',
-    })
-    headerImg.src = '/img/19-196326_logo-blue-free-logos-gratis-png-transparent-png.png'
+import CardioModal from './doctors/cardiomodal.js';
+import DentistModal from './doctors/DentistModal.js';
+import TherapistModal from './doctors/TherapistModal.js';
+import createElement from './api/createElement.js'
+import renderHeader from './api/renderHeader.js';
+import renderBody from './api/renderBody.js';
+import renderCards from './api/renderCards.js';
+window.addEventListener('load', function() {
+  if (localStorage.getItem('token')) {
+    document.querySelector('.header').append(createVisitBtn)
+    document.querySelector('.login-btn').remove()
     
-    header.append(headerImg)
-    document.body.append(header)
-}
+  } 
+  else {
+    document.querySelector('.header').append(loginBtn)
+  };
+     
+ })
+renderHeader()
 const loginInput = document.createElement('input');
 loginInput.classList.add('input')
 loginInput.placeholder = 'Login';
@@ -34,6 +24,10 @@ const passwordInput = document.createElement('input');
 passwordInput.classList.add('input')
 passwordInput.placeholder = 'Password'; 
 passwordInput.style.marginTop = '15px';
+const submitBtnLogin = document.createElement('button');
+submitBtnLogin .type = 'submit';
+submitBtnLogin .textContent = 'Submit';
+submitBtnLogin .classList.add('submit-btn-login')
 const submitBtn = document.createElement('button');
 submitBtn.type = 'submit';
 submitBtn.textContent = 'Submit';
@@ -41,10 +35,12 @@ submitBtn.classList.add('submit-btn')
 const closeModal = document.createElement('button');
 closeModal.textContent = '×'
 closeModal.classList.add('close')
+
 const createVisitBtn = document.createElement('a');
 createVisitBtn.textContent = 'Создать визит'
 createVisitBtn.classList.add('login-btn')
 createVisitBtn.classList.add('createVisit-btn')
+const loginBtn = document.querySelector('.login-btn')
 loginBtn.addEventListener('click', function(){
     document.querySelector('.body').insertAdjacentHTML('beforeend',`
     <div id="openModal" class="modal">
@@ -65,17 +61,12 @@ loginBtn.addEventListener('click', function(){
     `)
     document.querySelector('.modal-form').appendChild(loginInput);
     document.querySelector('.modal-form').appendChild(passwordInput)
-    document.querySelector('.modal-form').appendChild(
-        submitBtn
-    )
-    document.querySelector('.modal-header').appendChild(closeModal)
-    closeModal.addEventListener('click',function(){
-        document.querySelector('.modal').remove();
-    })
+    document.querySelector('.modal-form').appendChild(submitBtnLogin)
+   document.querySelector('.modal-header').append(closeModal)
 })    
-   
 
- submitBtn.addEventListener('click', function(e) {
+
+ submitBtnLogin .addEventListener('click', function(e) {
   if (loginInput.value && passwordInput.value) {
     fetch("https://ajax.test-danit.com/api/v2/cards/login", {
         method: 'POST',
@@ -95,25 +86,40 @@ loginBtn.addEventListener('click', function(){
             )
 
   }
-  else {
-    const invalidData = document.createElement('h2')
-      invalidData.textContent = 'Please enter valid data'
-      invalidData.classList.add('invalid-data')
-      document.querySelector('.modal-form').append(invalidData)
-  }
+  e.preventDefault()
   ;
-     e.preventDefault()
+
      
  }) 
  ;
 
-renderHeader()
 
 
  
 createVisitBtn.href = '#openModal'
 
-
+const urgency = document.createElement('select')
+urgency.classList.add('urgency')
+const urgencyPlaceholder = document.createElement('option')
+  urgencyPlaceholder.value = '-1'
+  urgencyPlaceholder.disabled = true
+  urgencyPlaceholder.selected = true
+  urgencyPlaceholder.textContent = 'Выберите срочность визита'
+  urgency.required = true
+  const lowUrgency = document.createElement('option')
+  lowUrgency.value = 'Низкая срочность'
+  lowUrgency.textContent = 'Низкая'
+  const mediumUrgency = document.createElement('option')
+  mediumUrgency.value = 'Средняя срочность'
+  mediumUrgency.textContent = 'Средняя'
+  const highUrgency = document.createElement('option')
+  highUrgency.value = 'Высокая срочность'
+  highUrgency.textContent = 'Высокая'
+  urgency.appendChild(urgencyPlaceholder)
+  urgency.appendChild(lowUrgency)
+  urgency.appendChild(mediumUrgency)
+  urgency.appendChild(highUrgency)
+ 
 createVisitBtn.addEventListener('click',function(){
   document.querySelector('.body').insertAdjacentHTML('beforeend',`
   <div id="openModal" class="modal">
@@ -131,9 +137,11 @@ createVisitBtn.addEventListener('click',function(){
       </div>
     </div>
   </div>
-</div>
-  `)
- const DoctorSelect = document.createElement('select')
+</div>`)
+document.querySelector('.modal-header').append(closeModal)
+const DoctorSelect = document.createElement('select')
+DoctorSelect.classList.add('doctor-select')
+ DoctorSelect.required = true
  const CardioOption = document.createElement('option')
  const selectPlaceHolder = document.createElement('option')
  selectPlaceHolder.textContent = 'Выберите врача'
@@ -141,13 +149,13 @@ createVisitBtn.addEventListener('click',function(){
  selectPlaceHolder.disabled = true
  selectPlaceHolder.selected = true
  CardioOption.textContent = 'Кардиолог'
- CardioOption.value = '1'
+ CardioOption.value = 'Кардиолог'
  const TherapistOption = document.createElement('option')
  TherapistOption.textContent = 'Терапевт'
- TherapistOption.value = '2'
+ TherapistOption.value = 'Терапевт'
  const DentistOption = document.createElement('option')
  DentistOption.textContent = 'Стоматолог'
- DentistOption.value = '3'
+ DentistOption.value = 'Стоматолог'
  document.querySelector('.modal-form').appendChild(DoctorSelect)
  DoctorSelect.appendChild(selectPlaceHolder)
  DoctorSelect.appendChild(CardioOption)
@@ -156,128 +164,151 @@ createVisitBtn.addEventListener('click',function(){
  const cardioModal = new CardioModal
  const therapistModal = new TherapistModal
  const dentistModal = new DentistModal
+ 
 renderModal()
 DoctorSelect.addEventListener('change',function(e){
-if (e.target.value === '1'){
+ if (e.target.value === 'Кардиолог'){
   dentistModal.removeModal()
   therapistModal.removeModal()
 cardioModal.render()
 } 
-else if (e.target.value === '2'){
+else if (e.target.value === 'Терапевт'){
   dentistModal.removeModal()
   cardioModal.removeModal()
 therapistModal.render()
 } 
-else if (e.target.value === '3'){
+else if (e.target.value === 'Стоматолог'){
   dentistModal.render()
   cardioModal.removeModal()
   therapistModal.removeModal()
 }
+document.querySelector('.modal-form').append(submitBtn)
 })
   
-  document.querySelector('.modal-header').appendChild(closeModal)
-  closeModal.addEventListener('click',function(){
-      document.querySelector('.modal').remove();
-  })
+  
 })
+
+
 const renderModal = function(){
   const visitTarget = document.createElement('input')
   visitTarget.placeholder = 'Цель вашего визита'
+  visitTarget.classList.add('visit-target')
+  visitTarget.required = true
   const visitDesc = document.createElement('input')
+  visitDesc.classList.add('visitDesc')
   visitDesc.placeholder = 'Краткое описание визита'
-  const urgency = document.createElement('select')
-  const urgencyPlaceholder = document.createElement('option')
-  urgencyPlaceholder.value = '-1'
-  urgencyPlaceholder.disabled = true
-  urgencyPlaceholder.selected = true
-  urgencyPlaceholder.textContent = 'Выберите срочность визита'
-  const lowUrgency = document.createElement('option')
-  lowUrgency.value = '1'
-  lowUrgency.textContent = 'Низкая'
-  const mediumUrgency = document.createElement('option')
-  mediumUrgency.value = '2'
-  mediumUrgency.textContent = 'Средняя'
-  const highUrgency = document.createElement('option')
-  highUrgency.value = '3'
-  highUrgency.textContent = 'Высокая'
+  visitDesc.required = true
+ 
+  
   const fullName = document.createElement('input')
-  fullName .placeholder = 'Ваше ФИО'
-  urgency.appendChild(urgencyPlaceholder)
-  urgency.appendChild(lowUrgency)
-  urgency.appendChild(mediumUrgency)
-  urgency.appendChild(highUrgency)
+  fullName.required = true
+  fullName.placeholder = 'Ваше ФИО'
+  fullName.classList.add('fullName')
   document.querySelector('.modal-form').append(visitTarget,visitDesc,urgency,fullName)
 }
 
 
 
-window.addEventListener('load', function() {
-  if (localStorage.getItem('token')) {
-    document.querySelector('.header').append(createVisitBtn)
-  } 
-  else {
-    document.querySelector('.header').append(loginBtn)
-  };
+
+submitBtn.addEventListener('click',function(e){
+e.preventDefault()
+if (urgency.value === 'Низкая'){
+alert('Выберите срочность визита')
+}
+else {
+  let visitTarget = document.querySelector('.visit-target').value
+  let visitDesc = document.querySelector('.visitDesc').value
+  let doctorselect = document.querySelector('.doctor-select').value
+  
+  let fullName = document.querySelector('.fullName').value
+ ;
+  let token = localStorage.getItem('token') 
+  if (doctorselect === 'Кардиолог') {
+    let blood = document.querySelector('.bloodPresure').value
+    
+    let diseaseHistory = document.querySelector('.diseaseHistory').value
+    let age = document.querySelector('.ageInput').value
+    let bmi = document.querySelector('.bmi-input').value
+    
+    fetch("https://ajax.test-danit.com/api/v2/cards", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        title: `${visitTarget}`,
+        description: `${visitDesc}`,
+        doctor: `${doctorselect}`,
+        urgency: `${urgency.value}`,
+        fullName: `${fullName}`,
+       bloodPresure: `${blood}`,
+       bmi: `${bmi}`,
+       diseaseHistory: `${diseaseHistory}`,
+       age: `${age}`,
+    
+    
+      })
+    })
+      .then(response => response.json())
+      .then(response => console.log(response))
+    
+    }
+    else if (doctorselect === 'Стоматолог'){
+      let lastVisit = document.querySelector('.lastVisitInput').value
+        fetch("https://ajax.test-danit.com/api/v2/cards", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            title: `${visitTarget}`,
+            description: `${visitDesc}`,
+            doctor: `${doctorselect}`,
+            urgency: `${urgency.value}`,
+            fullName: `${fullName}`,
+           lastVisit: `${lastVisit}`
+          })
+        })
+          .then(response => response.json())
+          .then(response => console.log(response))
+        
+        
+    }
+    else if (doctorselect === 'Терапевт'){
      
- })
- class DentistModal {
-  render() {
-   const lastVisitInput = document.createElement('input')
-   lastVisitInput.placeholder = 'Дата последнего визита'  
-   lastVisitInput.classList.add('lastVisitInput')
-  
-    document.querySelector('.modal-form').append(lastVisitInput,submitBtn)
- 
-  }
-  removeModal() {
-    if (document.querySelector('.lastVisitInput')){
-      document.querySelector('.lastVisitInput').remove()
+      let age = document.querySelector('.ageInput').value
+        fetch("https://ajax.test-danit.com/api/v2/cards", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            title: `${visitTarget}`,
+            description: `${visitDesc}`,
+            doctor: `${doctorselect}`,
+            urgency: `${urgency.value}`,
+            fullName: `${fullName}`,
+            age: `${age}`
+          })
+        })
+          .then(response => response.json())
+          .then(response => console.log(response))
+        
+        
+    
     }
+  }
   
-  }
-}
+  })
 
-class CardioModal {
-  render() {
-    const bloodPresure = document.createElement('input')
-    bloodPresure.placeholder = 'Ваше обычное давление'
-    bloodPresure.classList.add('bloodPresure')
-    const bmi = document.createElement('input')
-    bmi.placeholder = 'Ваш индекс массы тела'
-    bmi.classList.add('bmi')
-    const diseaseHistory = document.createElement('input')
-    diseaseHistory.placeholder = 'Перенесенные заболевания сердечно-сосудистой системы'
-    diseaseHistory.classList.add('diseaseHistory')
-    const ageInput = document.createElement('input')
-    ageInput.placeholder = 'Ваш возраст'
-    ageInput.classList.add('ageInput')
-    document.querySelector('.modal-form').append(bloodPresure,bmi,diseaseHistory,ageInput,submitBtn)
-    return ageInput
-  }
-  removeModal() {
-    if (document.querySelector('.bloodPresure') && document.querySelector('.bmi') && document.querySelector('.diseaseHistory') && document.querySelector('.ageInput') ){
-      document.querySelector('.bloodPresure').remove()
-      document.querySelector('.bmi').remove()
-      document.querySelector('.diseaseHistory').remove()
-      document.querySelector('.ageInput').remove()
-    }
-   
-  }
+  closeModal.addEventListener('click', function() {
+    document.querySelector('.modal').remove()
+    
+  })
+renderBody()
+if (localStorage.getItem('token')){
+  renderCards()
 }
-
-class TherapistModal {
-  render() {
-   const ageInput = document.createElement('input')
- ageInput.placeholder = 'Ваш возраст'  
- ageInput.classList.add('ageInput')
-    document.querySelector('.modal-form').append(ageInput,submitBtn)
- 
-  }
-  removeModal() {
-    if (document.querySelector('.ageInput')){
-      document.querySelector('.ageInput').remove()
-    }
-  
-  }
-}
-

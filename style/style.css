@@ -3,6 +3,39 @@
     padding: 10px 10px;
     border-radius: 8px;
 }
+.body-container{
+    padding: 10px 20px;
+    max-width:90%;
+    height: fit-content;
+    background-color: lightgreen;
+    margin: 0 auto;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(6,2fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+.card-container{
+    padding: 10px 20px;
+    background-color:green;
+}
+.card-description{
+    margin-bottom: 5px;
+}
+.card-doctor{
+    margin-bottom: 5px;
+}
+.urgency{
+    margin-bottom: 5px;
+}
+.full-name{
+    margin-bottom: 5px;
+}
+
+.card-title{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 .img-header{
     width: 30px;
     height: 30px;
