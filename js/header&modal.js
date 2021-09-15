@@ -6,14 +6,23 @@ import renderHeader from './api/renderHeader.js';
 import renderBody from './api/renderBody.js';
 import renderCards from './api/renderCards.js';
 import {Cardio,Dentist,Therapist} from './api/renderCards.js';
+import cardsChecker from './api/cardsChecker.js';
 window.addEventListener('load', function() {
+  let pleaseLogin = document.createElement('h2')
+    pleaseLogin.textContent = 'Пожалуйста войдите в систему'
+    pleaseLogin.classList.add('please-login')
   if (localStorage.getItem('token')) {
+ 
     document.querySelector('.header').append(createVisitBtn)
     document.querySelector('.login-btn').remove()
+    pleaseLogin.remove()
     renderCards()
+cardsChecker()
   } 
   else {
     document.querySelector('.header').append(loginBtn)
+    
+    document.querySelector('.body-container').append(pleaseLogin)
   };
      
  })
@@ -67,7 +76,7 @@ loginBtn.addEventListener('click', function(){
 })    
 
 
- submitBtnLogin .addEventListener('click', function(e) {
+ submitBtnLogin.addEventListener('click', function(e) {
   if (loginInput.value && passwordInput.value) {
     fetch("https://ajax.test-danit.com/api/v2/cards/login", {
         method: 'POST',
@@ -82,11 +91,15 @@ loginBtn.addEventListener('click', function(){
             document.querySelector('.modal').remove()
             loginBtn.remove()
             document.querySelector('.header').append(createVisitBtn)
+            renderCards()
+            cardsChecker()
+            document.querySelector('.please-login').remove()
         }
            
             )
 
   }
+  
   e.preventDefault()
   ;
 
@@ -217,6 +230,9 @@ if (urgency.value === '-1'){
 alert('Выберите срочность визита')
 }
 else {
+  if (document.querySelector('.please-login')){
+    document.querySelector('.please-login').remove()
+  }
   let visitTarget = document.querySelector('.visit-target').value
   let visitDesc = document.querySelector('.visitDesc').value
   let doctorselect = document.querySelector('.doctor-select').value
@@ -315,6 +331,7 @@ else {
    
   }
   
+  
   })
 
   closeModal.addEventListener('click', function() {
@@ -322,3 +339,10 @@ else {
     
   })
 renderBody()
+// fetch(`https://ajax.test-danit.com/api/v2/cards/26754`, {
+//   method: 'DELETE',
+//   headers: {
+//     'Authorization': `Bearer ${localStorage.getItem('token')}`
+//   },
+// })
+// localStorage.clear()

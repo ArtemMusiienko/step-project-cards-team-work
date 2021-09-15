@@ -1,15 +1,4 @@
-let deleteCard = function(id) {
-  fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    },
-  })
-;
-}
-let deleteCardLocal = function(){
-console.log(1);
-}
+import cardsChecker from './cardsChecker.js';
 
 export class Cardio  {
     constructor(title,description,doctor,urgency,fullName,bloodPressure,bmi,diseaseHistory,age,id) {
@@ -70,6 +59,14 @@ export class Cardio  {
         cardCloseBtn.addEventListener('click', function(e) {
           e.target.parentNode.remove();
          })
+         cardCloseBtn.addEventListener('click', function(){
+         if (!document.querySelector('.body-container').hasChildNodes()){
+          let createMoreCards = document.createElement('h2')
+          createMoreCards.classList.add('please-login')
+          createMoreCards.textContent = 'Карточек пока нет'
+          document.querySelector('.body-container').append(createMoreCards)
+         }
+         })
         cardDiv.append(cardCloseBtn,cardTitle,cardDescription,cardDoctor,urgency,fullName,bloodPressure,bmi,diseaseHistory,age)
         document.querySelector('.body-container').append(cardDiv)
         
@@ -123,6 +120,15 @@ export class Dentist  {
     cardCloseBtn.addEventListener('click', function(e) {
       e.target.parentNode.remove();
      })
+     cardCloseBtn.addEventListener('click', function(){
+      if (!document.querySelector('.body-container').hasChildNodes()){
+       let createMoreCards = document.createElement('h2')
+       createMoreCards.classList.add('please-login')
+       createMoreCards.textContent = 'Карточек пока нет'
+       document.querySelector('.body-container').append(createMoreCards)
+      }
+      })
+     cardCloseBtn.addEventListener('click', cardsChecker)
      cardDiv.append(cardCloseBtn,cardTitle,cardDescription,cardDoctor,urgency,fullName,lastVisit)
         document.querySelector('.body-container').append(cardDiv)
   }
@@ -175,6 +181,15 @@ export class Therapist  {
     cardCloseBtn.addEventListener('click', function(e) {
       e.target.parentNode.remove();
      })
+     cardCloseBtn.addEventListener('click', function(){
+      if (!document.querySelector('.body-container').hasChildNodes()){
+       let createMoreCards = document.createElement('h2')
+       createMoreCards.classList.add('please-login')
+       createMoreCards.textContent = 'Карточек пока нет'
+       document.querySelector('.body-container').append(createMoreCards)
+      }
+      })
+     cardCloseBtn.addEventListener('click', cardsChecker())
      cardDiv.append(cardCloseBtn,cardTitle,cardDescription,cardDoctor,urgency,fullName,age)
     document.querySelector('.body-container').append(cardDiv)
   }
@@ -218,8 +233,10 @@ fetch("https://ajax.test-danit.com/api/v2/cards", {
   },
   
 })
+
   .then(response => response.json())
   .then(cards => console.log(cards))
 export default renderCards;
+
 
 
