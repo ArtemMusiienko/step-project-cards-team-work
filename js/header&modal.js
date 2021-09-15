@@ -5,11 +5,12 @@ import createElement from './api/createElement.js'
 import renderHeader from './api/renderHeader.js';
 import renderBody from './api/renderBody.js';
 import renderCards from './api/renderCards.js';
+import {Cardio,Dentist,Therapist} from './api/renderCards.js';
 window.addEventListener('load', function() {
   if (localStorage.getItem('token')) {
     document.querySelector('.header').append(createVisitBtn)
     document.querySelector('.login-btn').remove()
-    
+    renderCards()
   } 
   else {
     document.querySelector('.header').append(loginBtn)
@@ -212,7 +213,7 @@ const renderModal = function(){
 
 submitBtn.addEventListener('click',function(e){
 e.preventDefault()
-if (urgency.value === 'Низкая'){
+if (urgency.value === '-1'){
 alert('Выберите срочность визита')
 }
 else {
@@ -251,7 +252,11 @@ else {
       })
     })
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(card => {
+        card = new Cardio(card.title,card.description,card.doctor,card.urgency,card.fullName,card.bloodPresure,card.bmi,card.diseaseHistory,card.age,card.id)
+        card.render()
+      })
+   
     
     }
     else if (doctorselect === 'Стоматолог'){
@@ -272,8 +277,12 @@ else {
           })
         })
           .then(response => response.json())
-          .then(response => console.log(response))
+          .then(card => {
+            card = new Dentist(card.title,card.description,card.doctor,card.urgency,card.fullName,card.lastVisit,card.id)
+  card.render()
+          })
         
+    
         
     }
     else if (doctorselect === 'Терапевт'){
@@ -295,11 +304,15 @@ else {
           })
         })
           .then(response => response.json())
-          .then(response => console.log(response))
+          .then(card => {
+            card = new Therapist(card.title,card.description,card.doctor,card.urgency,card.fullName,card.age,card.id)
+            card.render()
+          })
         
-        
-    
+     
     }
+    document.querySelector('.modal').remove()
+   
   }
   
   })
@@ -309,6 +322,3 @@ else {
     
   })
 renderBody()
-if (localStorage.getItem('token')){
-  renderCards()
-}

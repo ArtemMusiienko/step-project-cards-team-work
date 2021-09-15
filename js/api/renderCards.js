@@ -11,7 +11,7 @@ let deleteCardLocal = function(){
 console.log(1);
 }
 
-class Cardio  {
+export class Cardio  {
     constructor(title,description,doctor,urgency,fullName,bloodPressure,bmi,diseaseHistory,age,id) {
         this.title = title
         this.description = description
@@ -76,7 +76,7 @@ class Cardio  {
     }
   
 }
-class Dentist  {
+export class Dentist  {
   constructor(title,description,doctor,urgency,fullName,lastVisit,id) {
       this.title = title
       this.description = description
@@ -128,7 +128,7 @@ class Dentist  {
   }
 
 }
-class Therapist  {
+export class Therapist  {
   constructor(title,description,doctor,urgency,fullName,age,id) {
       this.title = title
       this.description = description
