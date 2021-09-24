@@ -111,6 +111,7 @@ editCard.src = './img/image.png'
 editCard.addEventListener('click',function(e){
     editCard.style.display = 'none';
     showMore.remove()
+    showLess.remove()
           const save = document.createElement("img")
           save.src = './img/save.png'
           save.classList.add('save-button')
