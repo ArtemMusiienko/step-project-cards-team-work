@@ -8,6 +8,7 @@ let renderHeader = function() {
     
     logo.src = './img/19-196326_logo-blue-free-logos-gratis-png-transparent-png.png'
 let loginBtn = createElement({tagName: 'a',text: 'Login',className: 'login-btn',})
+
   loginBtn.href = '#openModal'
   
   header.append(logo,loginBtn)

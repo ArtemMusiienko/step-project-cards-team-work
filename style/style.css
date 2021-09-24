@@ -10,6 +10,13 @@
     right: 8px;
     top: 30px;
 }
+.logout-btn{
+    background-color: #fff;
+    padding: 10px 10px;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: 15px;
+}
 .body-container{
     padding: 10px 20px;
     max-width:90%;

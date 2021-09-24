@@ -8,13 +8,19 @@ import renderCards from './api/renderCards.js';
 import {Cardio,Dentist,Therapist} from './api/renderCards.js';
 import cardsChecker from './api/cardsChecker.js';
 import createInput from './api/input.js'; 
+let logOutBtn = createElement({tagName: 'button',text: 'Выйти из системы',className: 'logout-btn',})
+logOutBtn.addEventListener('click', function() {
+  window.location.reload()
+  localStorage.clear()
+
+})
 window.addEventListener('load', function() {
   let pleaseLogin = document.createElement('h2')
     pleaseLogin.textContent = 'Пожалуйста войдите в систему'
     pleaseLogin.classList.add('please-login')
   if (localStorage.getItem('token') ) {
- 
-    document.querySelector('.header').append(createVisitBtn)
+   
+    document.querySelector('.header').append(logOutBtn,createVisitBtn)
     document.querySelector('.login-btn').remove()
     pleaseLogin.remove()
     renderCards()
@@ -22,6 +28,9 @@ cardsChecker()
   }
   
   else {
+    if(document.querySelector('logout-btn')){
+      document.querySelector('logout-btn').remove()
+    }
     document.querySelector('.header').append(loginBtn)
     
     document.querySelector('.body-container').append(pleaseLogin)
@@ -93,7 +102,7 @@ loginBtn.addEventListener('click', function(){
             localStorage.setItem('token',token)
             document.querySelector('.modal').remove()
             loginBtn.remove()
-            document.querySelector('.header').append(createVisitBtn)
+            document.querySelector('.header').append(logOutBtn,createVisitBtn)
             renderCards()
             cardsChecker()
             document.querySelector('.please-login').remove()
