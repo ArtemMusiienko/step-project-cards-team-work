@@ -4,7 +4,7 @@
      const ageInput = document.createElement('input')
    ageInput.placeholder = 'Ваш возраст'  
    ageInput.classList.add('ageInput')
-      document.querySelector('.modal-form').append(ageInput,submitBtn)
+      document.querySelector('.modal-form').append(ageInput)
    
     }
     removeModal() {
