@@ -12,14 +12,15 @@ window.addEventListener('load', function() {
   let pleaseLogin = document.createElement('h2')
     pleaseLogin.textContent = 'Пожалуйста войдите в систему'
     pleaseLogin.classList.add('please-login')
-  if (localStorage.getItem('token')) {
+  if (localStorage.getItem('token') ) {
  
     document.querySelector('.header').append(createVisitBtn)
     document.querySelector('.login-btn').remove()
     pleaseLogin.remove()
     renderCards()
 cardsChecker()
-  } 
+  }
+  
   else {
     document.querySelector('.header').append(loginBtn)
     
@@ -88,6 +89,7 @@ loginBtn.addEventListener('click', function(){
       })
         .then(response => response.text())
         .then(token => {
+          if (token !== 'Incorrect username or password'){
             localStorage.setItem('token',token)
             document.querySelector('.modal').remove()
             loginBtn.remove()
@@ -95,6 +97,11 @@ loginBtn.addEventListener('click', function(){
             renderCards()
             cardsChecker()
             document.querySelector('.please-login').remove()
+          }
+          else {
+            alert('Please enter a valid username or password')  
+          }
+           
         }
            
             )
