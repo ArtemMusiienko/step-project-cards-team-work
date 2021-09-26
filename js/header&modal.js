@@ -8,6 +8,7 @@ import renderCards from './api/renderCards.js';
 import {Cardio,Dentist,Therapist} from './api/renderCards.js';
 import cardsChecker from './api/cardsChecker.js';
 import createInput from './api/input.js'; 
+import createInputfrom from './api/input.js';
 let logOutBtn = createElement({tagName: 'button',text: 'Выйти из системы',className: 'logout-btn',})
 logOutBtn.addEventListener('click', function() {
   window.location.reload()
@@ -364,3 +365,4 @@ createInput()
 //   },
 // })
 // localStorage.clear()
+
