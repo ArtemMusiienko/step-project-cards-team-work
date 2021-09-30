@@ -24,6 +24,7 @@ window.addEventListener('load', function() {
     document.querySelector('.header').append(logOutBtn,createVisitBtn)
     document.querySelector('.login-btn').remove()
     pleaseLogin.remove()
+    createInput()
     renderCards()
 cardsChecker()
   }
@@ -104,6 +105,7 @@ loginBtn.addEventListener('click', function(){
             document.querySelector('.modal').remove()
             loginBtn.remove()
             document.querySelector('.header').append(logOutBtn,createVisitBtn)
+            createInput()
             renderCards()
             cardsChecker()
             document.querySelector('.please-login').remove()
@@ -357,7 +359,7 @@ else {
     
   })
 renderBody()
-createInput()
+
 // fetch(`https://ajax.test-danit.com/api/v2/cards/26754`, {
 //   method: 'DELETE',
 //   headers: {

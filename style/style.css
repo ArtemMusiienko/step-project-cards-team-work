@@ -10,6 +10,7 @@
     right: 8px;
     top: 30px;
 }
+
 .logout-btn{
     background-color: #fff;
     padding: 10px 10px;
@@ -55,15 +56,15 @@ padding-bottom: 10px;
 padding-left: 10px;
 padding-right: 30px;
 width: 240px;
-    background-color:green;
-    position: relative;
-    border-radius: 8px;
+background-color:green;
+position: relative;
+border-radius: 8px;
 }
 .card-close-btn{
-    background-color: none;
-    position: absolute;
-    top: 5px;
-    right: 5px
+background-color: none;
+position: absolute;
+top: 5px;
+right: 5px
 }
 .card-description{
     margin-bottom: 5px;
@@ -230,8 +231,6 @@ overflow: auto;
 .space_for_inputs{
     margin-top: 30px;
   margin-left: 300px;
-  
-  
 }
 .input_title{
     margin-left:40px;

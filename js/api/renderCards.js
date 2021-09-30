@@ -168,7 +168,7 @@ diseaseHistory.textContent = editDiseaseHistory.value
 editDiseaseHistory.remove()
 age.textContent = editAge.value
 editAge.remove()
-showLess.style.display = 'block'
+
 cardDiv.append(editCard,cardCloseBtn,cardTitle,cardDescription,cardDoctor,showMore,showLess,urgency,fullName,bloodPressure,bmi,diseaseHistory,age)
 editCard.style.display = 'block'
 
